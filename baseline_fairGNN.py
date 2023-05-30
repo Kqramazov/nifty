@@ -133,7 +133,7 @@ if __name__ == '__main__':
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     if args.cuda:
-        torch.cuda.manual_seed(args.run)
+        torch.cuda.manual_seed(args.seed)
 
     # Load data
     # print(args.dataset)
@@ -151,7 +151,8 @@ if __name__ == '__main__':
                                                                                     predict_attr,
                                                                                     path=path,
                                                                                     label_number=label_number,
-                                                                                    sens_number=sens_number)
+                                                                                    sens_number=sens_number,
+                                                                                    seed=args.seed)
     # Load credit_scoring dataset
     elif args.dataset == 'credit':
         sens_attr = "Age"  # column number after feature process is 1
@@ -163,7 +164,8 @@ if __name__ == '__main__':
         adj, features, labels, idx_train, idx_val, idx_test, sens, idx_sens_train = load_credit(args.dataset, sens_attr, 
                                                                                      predict_attr, path=path_credit, 
                                                                                      label_number=label_number, 
-                                                                                     sens_number=sens_number)
+                                                                                     sens_number=sens_number,
+                                                                                     seed=args.seed)
         norm_features = feature_norm(features)
         norm_features[:, sens_idx] = features[:, sens_idx]
         features = norm_features
@@ -179,7 +181,8 @@ if __name__ == '__main__':
         adj, features, labels, idx_train, idx_val, idx_test, sens, idx_sens_train = load_bail(args.dataset, sens_attr, 
                                                                                     predict_attr, path=path_bail,
                                                                                     label_number=label_number,
-                                                                                    sens_number=sens_number)
+                                                                                    sens_number=sens_number,
+                                                                                    seed=args.seed)
         norm_features = feature_norm(features)
         norm_features[:, sens_idx] = features[:, sens_idx]
         features = norm_features
